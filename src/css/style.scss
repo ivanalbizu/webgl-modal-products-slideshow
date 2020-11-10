@@ -165,24 +165,22 @@ body {
 	top: 0;
 	left: 8px;
 	height: 6px;
-	
-
-	border-radius: 0; 
-
-	
-	&::-webkit-progress-bar {
-		background-color: rgba(255,255,255,.3);
-		border-radius: 0;
-	}
-	&::-webkit-progress-value {
-		background-color: #fff;
-		border-radius: 0;
-	}
-	&::-moz-progress-bar {
-		background-color: rgba(255,255,255,.3);
-		border-radius: 0;
-	}
+	border-radius: 0;
+	border: 0;
 }
+::-webkit-progress-bar {
+	background-color: rgba(255,255,255,.3);
+	border-radius: 0;
+}
+::-webkit-progress-value {
+	background-color: #fff;
+	border-radius: 0;
+}
+::-moz-progress-bar {
+	background-color: rgba(0, 0, 0, .6);
+	border-radius: 0;
+}
+
 
 @media (max-width: 575px) {
 	.wrapper {
