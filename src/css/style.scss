@@ -8,11 +8,25 @@ body {
 	background: #ffffff;
 	overflow: hidden;
 }
+.main {
+  display: grid;
+  grid-template-columns: 4fr 3fr;
+  grid-template-rows: 1fr;
+  gap: 0px;
+  grid-template-areas:
+		"left right";
+	width: 100vw;
+}
+.content {
+	grid-area: right;
+}
+
 .slides {
 	display: flex;
 	flex-wrap: wrap;
 }
 .wrapper {
+	grid-area: left;
 	width: 100%;
 	height: 100vh;
 	overflow: hidden;
@@ -24,9 +38,12 @@ body {
 }
 .canvas {
 	height: 100vh;
-	width: 100vw;
+	width: 100%;
 	z-index: 10;
 	grid-area: 1 / 1 / 1 / 1;
+	canvas {
+		width: 100% !important;
+	}
 }
 
 .multi-textures {
@@ -183,6 +200,12 @@ body {
 
 
 @media (max-width: 575px) {
+	.main {
+		grid-template-columns: 1fr;
+		grid-template-areas:
+			"left"
+			"right";
+	}
 	.wrapper {
 		height: 45vh;
 	}
