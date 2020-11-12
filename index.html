@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Curtains JS Slides</title>
+  <title>Curtains JS - WebGL Product Details</title>
   <link rel="stylesheet" href="./src/css/style.css">
   <script src="./src/js/script.js" defer></script>
 </head>
@@ -15,24 +15,56 @@
       <div class="canvas"></div>
       <section class="slides multi-textures">
         <img src="./src/img/displacement01.png" data-sampler="displacement">
-        <img src="./src/img/city/amsterdam.jpg">
-        <img src="./src/img/city/bilbao.jpg">
-        <img src="./src/img/city/golden-gate-bridge.jpg">
-        <img src="./src/img/city/valencia.jpg">
-        <img src="./src/img/city/water.jpg">
-        <img src="./src/img/city/peine.jpg">
+        <img src="./src/img/model/model-woman-white-01.jpg">
+        <img src="./src/img/model/model-woman-white-02.jpg">
+        <img src="./src/img/model/model-woman-white-03.jpg">
+        <img src="./src/img/model/model-woman-white-04.jpg">
         <nav class="nav">
           <button class="btn" data-goto="prev" type="button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#242424" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 12H6M12 5l-7 7 7 7"/></svg>
           </button>
           <button class="btn" data-goto="next" type="button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#242424" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h13M12 5l7 7-7 7"/></svg>
           </button>
         </nav>
       </section>
     </section>
-    <section class="content">
-      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident, sint.</p>
+    <section class="content product">
+      <h2 class="product__title">Sneakers Peachers</h2>
+      <h3 class="product__price">80,30 €</h3>
+      <p class="product__content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam, dolor vitae. Reiciendis quidem consequatur maxime incidunt vitae nesciunt et molestiae, aliquid deserunt? Nostrum.</p>
+      <h4 class="product__legend-size">Sizes</h4>
+      <div class="labels">
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">30</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size" checked>
+          <span class="checkmark">31</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">32</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">33</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">34</span>
+        </label>
+      </div>
+      <button class="product__submit marquee" type="submit">
+        <span class="mar-default">Add to Cart</span>
+        <span class="mar-move">
+          <span class="mar-move__txt">Add to cart  -  30% discount if you buy before 12/12/20</span>
+          <span class="mar-move__txt">Add to cart  -  30% discount if you buy before 12/12/20</span>
+        </span>
+      </button>
     </section>
   </main>
 

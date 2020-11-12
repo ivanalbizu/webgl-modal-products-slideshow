@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;500&family=Big+Shoulders+Stencil+Text&display=swap");
 html,
 body {
   min-height: 100%;
@@ -5,14 +6,15 @@ body {
 
 body {
   margin: 0;
-  font-family: sans-serif;
-  background: #ffffff;
+  font-family: 'Big Shoulders Display', cursive;
+  background: #fff;
+  color: #242424;
   overflow: hidden;
 }
 
 .main {
   display: grid;
-  grid-template-columns: 4fr 3fr;
+  grid-template-columns: 3fr 4fr;
   grid-template-rows: 1fr;
   gap: 0px;
   grid-template-areas: "left right";
@@ -94,21 +96,28 @@ body {
 .nav {
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  width: 94%;
+  margin: auto;
+  opacity: 0;
+  transition: opacity .2s ease-out, width .3s ease-in-out;
+}
+
+.wrapper:hover .nav, .wrapper:focus-within .nav {
+  opacity: 1;
+  transition: opacity .2s ease-out;
 }
 
 .btn {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.9);
-  color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: transparent;
+  border: 0;
   width: 4em;
   height: 4em;
-  margin: 0.5em .2em;
+  margin: .5em .2em;
   cursor: pointer;
-  transition: all .7s ease-in 0s;
+  transition: opacity .2s ease-in 0s;
 }
 
 .btn svg,
@@ -201,17 +210,17 @@ body {
 }
 
 ::-webkit-progress-bar {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(0, 0, 0, 0.1);
   border-radius: 0;
 }
 
 ::-webkit-progress-value {
-  background-color: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
   border-radius: 0;
 }
 
 ::-moz-progress-bar {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.5);
   border-radius: 0;
 }
 
@@ -228,5 +237,161 @@ body {
   }
   .progress {
     width: calc(45vh - 16px);
+  }
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  font-weight: 400;
+}
+
+legend {
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+}
+
+.labels {
+  display: flex;
+  margin-bottom: 1.2em;
+}
+
+.labels .container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  gap: 0;
+  width: 36px;
+  height: 24px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.labels .container:not(:last-of-type) {
+  margin-right: .6em;
+}
+
+.labels .container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+  margin: 0;
+}
+
+.labels .container input:checked ~ .checkmark {
+  border: 1px solid rgba(0, 0, 0, 0.95);
+}
+
+.labels .container .checkmark {
+  grid-area: 1 / 1 / 2 / 2;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  font-size: .7em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  padding: clamp(40px, 5vw, 600px);
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+}
+
+.product__title {
+  font-family: 'Big Shoulders Stencil Text', cursive;
+  font-size: clamp(30px, 5vw, 120px);
+  line-height: 1.1;
+  margin-bottom: .2em;
+}
+
+.product__price {
+  font-size: clamp(20px, 2vw, 100px);
+  line-height: 1.1;
+  margin-bottom: .7em;
+}
+
+.product__content {
+  font-size: clamp(17px, 3vw, 24px);
+  line-height: 1.1;
+  margin-bottom: 1.8em;
+}
+
+.product__legend-size {
+  font-size: clamp(15px, 2.8vw, 22px);
+  line-height: 1.1;
+  margin-bottom: .4em;
+}
+
+.product__submit {
+  margin-top: auto;
+  cursor: pointer;
+  border: 0;
+  appearance: none;
+  font-family: 'Big Shoulders Display', cursive;
+  font-size: clamp(17px, 3vw, 24px);
+  background-color: rgba(0, 0, 0, 0.95);
+  color: #fff;
+  padding: .8em .3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product__submit:focus {
+  outline: none;
+}
+
+.marquee {
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee .mar-default {
+  opacity: 1;
+  transition: opacity linear .4s;
+}
+
+.marquee .mar-move {
+  left: 0;
+  display: block;
+  width: 200%;
+  position: absolute;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.marquee .mar-move__txt {
+  float: left;
+  width: 50%;
+}
+
+.marquee:hover .mar-default {
+  opacity: 0;
+  transition: opacity linear .4s;
+}
+
+.marquee:hover .mar-move {
+  opacity: 1;
+  transition: opacity linear .4s .5s;
+  animation: marquee 4s linear .5s infinite;
+}
+
+@keyframes marquee {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -100%;
   }
 }
