@@ -55,7 +55,7 @@ class WebglSlides {
 		this.curtains.onContextLost(() => this.restoreContext())
 	}
 
-	initPlane () {
+	initPlane() {
 		this.multiTexturesPlane = new Plane(this.curtains, this.planeElement, this.params)
 
 		this.multiTexturesPlane
@@ -80,7 +80,7 @@ class WebglSlides {
 			})
 	}
 
-	update () {
+	update() {
 		this.multiTexturesPlane.onRender(() => {
 			if (this.slidesState.isChanging) {
 				this.slidesState.transitionTimer += (90 - this.slidesState.transitionTimer) * 0.1
@@ -94,7 +94,7 @@ class WebglSlides {
 		})
 	}
 
-	arrowEvent (activeTexture, nextTexture) {
+	arrowEvent(activeTexture, nextTexture) {
 		this.slidesState.navs.forEach(nav => {
 			nav.addEventListener('click', event => {
 
@@ -105,7 +105,7 @@ class WebglSlides {
 		})
 	}
 
-	keyboardEvent (activeTexture, nextTexture) {
+	keyboardEvent(activeTexture, nextTexture) {
 		const that = this
 		document.addEventListener('keyup', event => {
 			if (document.querySelector('.modal--active')) {
@@ -123,7 +123,7 @@ class WebglSlides {
 		})
 	}
 
-	wheelEvent (activeTexture, nextTexture) {
+	wheelEvent(activeTexture, nextTexture) {
 		const that = this
 		this.canvas.closest('.modal').addEventListener('wheel', event => {
 			let to = undefined
@@ -137,12 +137,12 @@ class WebglSlides {
 		})
 	}
 
-	touchEvent () {
+	touchEvent() {
 		this.planeElement.addEventListener('touchstart', this._handleTouchStart.bind(this), false)
 		this.planeElement.addEventListener('touchend', this._handleTouchEnd.bind(this), false)
 	}
 
-	_animateProgressBar () {
+	_animateProgressBar() {
 		if (this.slidesState.next) {
 			if (this.slidesState.value == 100) {
 				this.slidesState.value = 0
@@ -159,7 +159,7 @@ class WebglSlides {
 		if (this.slidesState.value !== this.slidesState.steps) requestAnimationFrame(() => this._animateProgressBar())
 	}
 
-	_animate (to, activeTexture, nextTexture) {
+	_animate(to, activeTexture, nextTexture) {
 		if (!this.slidesState.isChanging && to) {
 
 			this.curtains.enableDrawing()
@@ -187,7 +187,7 @@ class WebglSlides {
 		}
 	}
 
-	_navigationDirection (to) {
+	_navigationDirection(to) {
 		if (to == 'next') {
 			this.slidesState.next = true
 			if (this.slidesState.activeTextureIndex < this.slidesState.maxTextures) {
@@ -205,17 +205,17 @@ class WebglSlides {
 		}
 	}
 
-	_handleTouchStart (event) {
-    this.touchStartX = event.touches[0].pageX
-  }
+	_handleTouchStart(event) {
+		this.touchStartX = event.touches[0].pageX
+	}
 
-  _handleTouchEnd (event) {
-		const moveX = event.changedTouches[event.changedTouches.length-1].pageX - this.touchStartX
-    if (moveX < -10) this.slidesState.navs[0].click()
-    else if (moveX > 10) this.slidesState.navs[1].click()
-  }
+	_handleTouchEnd(event) {
+		const moveX = event.changedTouches[event.changedTouches.length - 1].pageX - this.touchStartX
+		if (moveX < -10) this.slidesState.navs[0].click()
+		else if (moveX > 10) this.slidesState.navs[1].click()
+	}
 
-	error () {
+	error() {
 		document.body.classList.add("no-curtains", "image-1")
 
 		this.slidesState.navs.forEach(nav => {
@@ -232,152 +232,152 @@ class WebglSlides {
 		})
 	}
 
-	restoreContext () {
+	restoreContext() {
 		this.curtains.restoreContext()
 	}
 
-	removePlanes () {
+	removePlanes() {
 		this.curtains.dispose()
 	}
 }
 
 const isMobileDevice = () => {
-  return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+	return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  const modals = document.querySelectorAll('[data-modal]')
-  modals.forEach(modal => modal.addEventListener('click', openModal, false))
+	const modals = document.querySelectorAll('[data-modal]')
+	modals.forEach(modal => modal.addEventListener('click', openModal, false))
 
-  const closes = document.querySelectorAll('.modal-close')
-  closes.forEach(close => close.addEventListener('click', closeModal, false))
+	const closes = document.querySelectorAll('.modal-close')
+	closes.forEach(close => close.addEventListener('click', closeModal, false))
 
-  if (!isMobileDevice()) {
-    const wakeyFixRequired = 'CSS' in window && typeof CSS.supports === 'function' && !CSS.supports('-webkit-appearance', 'none');
+	if (!isMobileDevice()) {
+		const wakeyFixRequired = 'CSS' in window && typeof CSS.supports === 'function' && !CSS.supports('-webkit-appearance', 'none');
 
-    const ROOT_CLASS = 'scrollscreen';
-    document.documentElement.classList.add('custom-scroll');
+		const ROOT_CLASS = 'scrollscreen';
+		document.documentElement.classList.add('custom-scroll');
 
-    const createElement = (tag, name) => {
-      const el = document.createElement(tag);
-      el.className = `${ROOT_CLASS}--${name}`;
-      return el;
-    }
+		const createElement = (tag, name) => {
+			const el = document.createElement(tag);
+			el.className = `${ROOT_CLASS}--${name}`;
+			return el;
+		}
 
-    const createScrollscreen = (root) => {
+		const createScrollscreen = (root) => {
 
-      const fragment = document.createDocumentFragment();
-      [...root.childNodes].forEach(child => {
-        fragment.appendChild(child);
-      });
+			const fragment = document.createDocumentFragment();
+			[...root.childNodes].forEach(child => {
+				fragment.appendChild(child);
+			});
 
-      const content = createElement('div', 'content');
-      content.appendChild(fragment);
-      root.appendChild(content);
+			const content = createElement('div', 'content');
+			content.appendChild(fragment);
+			root.appendChild(content);
 
-      const track = createElement('div', 'track');
-      root.appendChild(track);
+			const track = createElement('div', 'track');
+			root.appendChild(track);
 
-      const slider = createElement('div', 'slider');
-      track.appendChild(slider);
+			const slider = createElement('div', 'slider');
+			track.appendChild(slider);
 
-      let pendingFrame = null;
+			let pendingFrame = null;
 
-      const redraw = () => {
+			const redraw = () => {
 
-        cancelAnimationFrame(pendingFrame);
+				cancelAnimationFrame(pendingFrame);
 
-        pendingFrame = requestAnimationFrame(() => {
+				pendingFrame = requestAnimationFrame(() => {
 
-          const contentHeight = content.scrollHeight;
-          const containerHeight = root.offsetHeight;
-          const percentageVisible = containerHeight / contentHeight;
-          const sliderHeight = percentageVisible * containerHeight;
-          const percentageOffset = content.scrollTop / (contentHeight - containerHeight);
-          const sliderOffset = percentageOffset * (containerHeight - sliderHeight);
+					const contentHeight = content.scrollHeight;
+					const containerHeight = root.offsetHeight;
+					const percentageVisible = containerHeight / contentHeight;
+					const sliderHeight = percentageVisible * containerHeight;
+					const percentageOffset = content.scrollTop / (contentHeight - containerHeight);
+					const sliderOffset = percentageOffset * (containerHeight - sliderHeight);
 
-          track.style.opacity = percentageVisible === 1 ? 0 : 1;
+					track.style.opacity = percentageVisible === 1 ? 0 : 1;
 
-          slider.style.cssText = `
+					slider.style.cssText = `
             height: ${sliderHeight}px;
             transform: translateY(${sliderOffset}px);
           `;
-        });
+				});
 
-      }
+			}
 
-      content.addEventListener('scroll', redraw);
-      window.addEventListener('resize', redraw);
+			content.addEventListener('scroll', redraw);
+			window.addEventListener('resize', redraw);
 
-      redraw();
+			redraw();
 
-      if (!wakeyFixRequired) return;
+			if (!wakeyFixRequired) return;
 
-      const wakey = () => {
-        requestAnimationFrame(() => {
-          const offset = content.scrollTop;
-          content.scrollTop = offset + 1;
-          content.scrollTop = offset;
-        });
-      }
+			const wakey = () => {
+				requestAnimationFrame(() => {
+					const offset = content.scrollTop;
+					content.scrollTop = offset + 1;
+					content.scrollTop = offset;
+				});
+			}
 
-      root.addEventListener('mouseenter', wakey);
+			root.addEventListener('mouseenter', wakey);
 
-      wakey();
-    }
+			wakey();
+		}
 
-    [...document.querySelectorAll(`.${ROOT_CLASS}`)].forEach(createScrollscreen);
+		[...document.querySelectorAll(`.${ROOT_CLASS}`)].forEach(createScrollscreen);
 
-  }
+	}
 
 })
 
 
 const requestAnimationFramePromise = () => {
-  return new Promise(resolve => requestAnimationFrame(resolve))
+	return new Promise(resolve => requestAnimationFrame(resolve))
 }
 const transitionEndPromise = (element, last) => {
-  return new Promise(resolve => {
-    element.addEventListener('transitionend', event => {
-      if (event.propertyName !== last) return
-      element.removeEventListener('transitionend', this)
-      resolve()
-    }, true)
-  })
+	return new Promise(resolve => {
+		element.addEventListener('transitionend', event => {
+			if (event.propertyName !== last) return
+			element.removeEventListener('transitionend', this)
+			resolve()
+		}, true)
+	})
 }
 const animate = async (element, stylz, last) => {
-  Object.assign(element.style, stylz)
-  return transitionEndPromise(element, last).then(_ => requestAnimationFramePromise())
+	Object.assign(element.style, stylz)
+	return transitionEndPromise(element, last).then(_ => requestAnimationFramePromise())
 }
 
 const transtionFrom = (el, start, appendTo) => {
 	const styles = window.getComputedStyle(el)
-  const rect = start.getBoundingClientRect()
-  const style = {
-    left: `${rect.left}px`,
-    top: `${rect.top}px`,
-    width: `${rect.width}px`,
+	const rect = start.getBoundingClientRect()
+	const style = {
+		left: `${rect.left}px`,
+		top: `${rect.top}px`,
+		width: `${rect.width}px`,
 		height: `${rect.height}px`,
 		fontSize: styles.getPropertyValue('font-size'),
 		position: `fixed`,
 		backgroundSize: `cover`
-  }
-  Object.assign(el.style, style)
-  appendTo.parentNode.append(el)
+	}
+	Object.assign(el.style, style)
+	appendTo.parentNode.append(el)
 }
 
 const transitionTo = (el, cssTransition) => {
-  const styles = window.getComputedStyle(el)
-  const rect = el.getBoundingClientRect()
-  return { 
-    transition: `${cssTransition}`,
-    top: `${rect.top}px`,
-    left: `${rect.left}px`,
-    width: `${rect.width}px`,
-    height: `${rect.height}px`,
-    fontSize: styles.getPropertyValue('font-size')
-  }
+	const styles = window.getComputedStyle(el)
+	const rect = el.getBoundingClientRect()
+	return {
+		transition: `${cssTransition}`,
+		top: `${rect.top}px`,
+		left: `${rect.left}px`,
+		width: `${rect.width}px`,
+		height: `${rect.height}px`,
+		fontSize: styles.getPropertyValue('font-size')
+	}
 }
 
 let modalState = {}
@@ -389,9 +389,9 @@ const openModal = event => {
 	document.body.classList.add('is-fade-in')
 
 	const product = event.target.closest('.product')
-	const dataModalID = 'modal'+product.getAttribute('data-modal')
-	const modal = document.querySelector('#'+dataModalID)
-  product.style.pointerEvents = 'none'
+	const dataModalID = 'modal' + product.getAttribute('data-modal')
+	const modal = document.querySelector('#' + dataModalID)
+	product.style.pointerEvents = 'none'
 	product.setAttribute('data-modal-active', true)
 
 	productState = {
@@ -410,13 +410,13 @@ const openModal = event => {
 
 	const cloneProductImg = productState.img.cloneNode(true)
 	cloneProductImg.style.borderColor = 'transparent'
-  transtionFrom(cloneProductImg, productState.img, product)
+	transtionFrom(cloneProductImg, productState.img, product)
 	const cloneProductTitle = productState.title.cloneNode(true)
-  transtionFrom(cloneProductTitle, productState.title, product)
+	transtionFrom(cloneProductTitle, productState.title, product)
 	const cloneProductPrice = productState.price.cloneNode(true)
-  transtionFrom(cloneProductPrice, productState.price, product)
+	transtionFrom(cloneProductPrice, productState.price, product)
 
-  const animationAll = async () => {
+	const animationAll = async () => {
 		if (!webgl[dataModalID]) {
 			const modalWebGL = modal.querySelector('.modal__webgl')
 			const canvas = modalWebGL.querySelector('.canvas')
@@ -442,7 +442,7 @@ const openModal = event => {
 		product.style.pointerEvents = ''
 		document.body.classList.remove('is-fade-in')
 	}
-  animationAll()
+	animationAll()
 }
 
 
@@ -457,9 +457,9 @@ const closeModal = () => {
 
 	const cloneProductImg = modalState.img.cloneNode(true)
 	transtionFrom(cloneProductImg, modalState.img, productState.img)
-	const cloneProductTitle = modalState.title.cloneNode(true)	
+	const cloneProductTitle = modalState.title.cloneNode(true)
 	transtionFrom(cloneProductTitle, modalState.title, productState.title)
-	const cloneProductPrice = modalState.price.cloneNode(true)	
+	const cloneProductPrice = modalState.price.cloneNode(true)
 	transtionFrom(cloneProductPrice, modalState.price, productState.price)
 
 	const animationAll = async () => {
@@ -482,7 +482,7 @@ const closeModal = () => {
 }
 
 const asyncImageLoader = url => {
-	return new Promise( (resolve, reject) => {
+	return new Promise((resolve, reject) => {
 		const image = new Image()
 		image.src = url
 		image.onload = () => resolve(image)
