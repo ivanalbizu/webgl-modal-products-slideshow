@@ -1,17 +1,69 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Curtains JS - WebGL Product Details</title>
+  <title>Modal WebGL</title>
   <link rel="stylesheet" href="./src/css/style.css">
   <script src="./src/js/script.js" defer></script>
 </head>
 <body>
+  <svg display="none" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="svg-icon-close" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" id=".5786439775930057" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 6L6 18M6 6l12 12"></path>
+    </symbol>
+  </svg>
 
-  <main class="main">
-    <section class="wrapper">
-      <progress class="progress" value="16" max="100"></progress>
+  
+  <div class="scrollscreen">
+    <main class="main">
+      <div class="modal-overlay"></div>
+      <section class="products">
+        <article class="product" data-modal="1" data-modal-active="false">
+          <div class="product__img" style="background-image: url(./src/img/model/model-woman-white-01.jpg)"></div>
+          <h2 class="product__title">Sneakers Peachers</h2>
+          <h3 class="product__price">80,30 €</h3>
+          <p class="product__description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa, molestias!</p>
+        </article>
+        <article class="product" data-modal="2" data-modal-active="false">
+          <div class="product__img" style="background-image: url(./src/img/model/model-man-black-01.jpg)"></div>
+          <h2 class="product__title">Producto uno</h2>
+          <h3 class="product__price">20,60 €</h3>
+          <p class="product__description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa, molestias Lorem ipsum dolor sit.</p>
+        </article>
+        <article class="product" data-modal="3" data-modal-active="false">
+          <div class="product__img" style="background-image: url(./src/img/model/model-man-light-01.jpg)"></div>
+          <h2 class="product__title">Producto dos</h2>
+          <h3 class="product__price">36,90 €</h3>
+          <p class="product__description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa, molestias Lorem ipsum dolor sit.</p>
+        </article>
+        <article class="product" data-modal="4" data-modal-active="false">
+          <div class="product__img" style="background-image: url(./src/img/model/model-woman-red-01.jpg)"></div>
+          <h2 class="product__title">Woman red</h2>
+          <h3 class="product__price">44,20 €</h3>
+          <p class="product__description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa, molestias Lorem ipsum dolor sit.</p>
+        </article>
+        <article class="product" data-modal="5" data-modal-active="false">
+          <div class="product__img" style="background-image: url(./src/img/model/model-man-brown-01.jpg)"></div>
+          <h2 class="product__title">Man brown</h2>
+          <h3 class="product__price">66,30 €</h3>
+          <p class="product__description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa, molestias Lorem ipsum dolor sit.</p>
+        </article>
+        <article class="product" data-modal="6" data-modal-active="false">
+          <div class="product__img" style="background-image: url(./src/img/shirts/shirt-01.jpg)"></div>
+          <h2 class="product__title">Shirt molona</h2>
+          <h3 class="product__price">15,15 €</h3>
+          <p class="product__description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa, molestias Lorem ipsum dolor sit.</p>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <!-- WebGL 1-->
+  <div class="modal" id="modal1">
+    <section class="modal__webgl">
+      <div class="modal-image"></div>
+      <progress class="progress" value="25" max="100"></progress>
       <div class="canvas"></div>
       <section class="slides multi-textures">
         <img src="./src/img/displacement01.png" data-sampler="displacement">
@@ -31,11 +83,16 @@
         </nav>
       </section>
     </section>
-    <section class="content product">
-      <h2 class="product__title">Sneakers Peachers</h2>
-      <h3 class="product__price">80,30 €</h3>
-      <p class="product__content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam, dolor vitae. Reiciendis quidem consequatur maxime incidunt vitae nesciunt et molestiae, aliquid deserunt? Nostrum.</p>
-      <h4 class="product__legend-size">Sizes</h4>
+    <section class="modal__content product">
+      <h2 class="product__title product__title--modal">Sneakers Peachers</h2>
+      <button class="modal-close" type="button">
+        <svg class="svg-icon-close">
+          <use xlink:href="#svg-icon-close" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+        </svg>
+      </button>
+      <h3 class="product__price product__price--modal">80,30 €</h3>
+      <p class="product__description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam, dolor vitae. Reiciendis quidem consequatur maxime incidunt vitae nesciunt et molestiae, aliquid deserunt? Nostrum.</p>
+      <h4 class="product__legend-size product__legend-size--modal">Sizes</h4>
       <div class="labels">
         <label class="container">
           <input type="radio" name="size">
@@ -66,91 +123,340 @@
         </span>
       </button>
     </section>
-  </main>
-
-  <div class="open-modal">
-    <button class="js-open-modal" type="button">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
-    </button>
-    <button class="js-close-modal" type="button">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-    </button>
   </div>
 
-  <div class="modal">
-    <div class="modal__content">
-      <img src="./src/img/displacement01.png" data-setting class="active" alt="">
-      <img src="./src/img/displacement02.jpg" data-setting alt="">
-      <img src="./src/img/displacement03.jpg" data-setting alt="">
-      <img src="./src/img/displacement04.jpg" data-setting alt="">
-      <img src="./src/img/displacement05.jpg" data-setting alt="">
-      <img src="./src/img/displacement06.jpg" data-setting alt="">
-      <img src="./src/img/displacement07.jpg" data-setting alt="">
-      <img src="./src/img/displacement08.jpg" data-setting alt="">
-      <img src="./src/img/displacement09.jpg" data-setting alt="">
-      <img src="./src/img/displacement10.jpg" data-setting alt="">
-      <img src="./src/img/displacement11.jpg" data-setting alt="">
-      <img src="./src/img/displacement12.jpg" data-setting alt="">
-      <img src="./src/img/displacement13.jpg" data-setting alt="">
-    </div>
+
+  <!-- WebGL 2-->
+  <div class="modal" id="modal2">
+    <section class="modal__webgl">
+      <div class="modal-image"></div>
+      <progress class="progress" value="33" max="100"></progress>
+      <div class="canvas"></div>
+      <section class="slides multi-textures">
+        <img src="./src/img/displacement02.jpg" data-sampler="displacement">
+        <img src="./src/img/model/model-man-black-01.jpg">
+        <img src="./src/img/model/model-man-black-02.jpg">
+        <img src="./src/img/model/model-man-black-03.jpg">
+        <nav class="nav">
+          <button class="btn" data-goto="prev" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#242424" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 12H6M12 5l-7 7 7 7"/></svg>
+          </button>
+          <button class="btn" data-goto="next" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#242424" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h13M12 5l7 7-7 7"/></svg>
+          </button>
+        </nav>
+      </section>
+    </section>
+    <section class="modal__content product">
+      <h2 class="product__title product__title--modal">Producto uno</h2>
+      <button class="modal-close" type="button">
+        <svg class="svg-icon-close">
+          <use xlink:href="#svg-icon-close" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+        </svg>
+      </button>
+      <h3 class="product__price product__price--modal">20,60 €</h3>
+      <p class="product__description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam, dolor vitae. Reiciendis quidem consequatur maxime incidunt vitae nesciunt et molestiae, aliquid deserunt? Nostrum.</p>
+      <h4 class="product__legend-size product__legend-size--modal">Sizes</h4>
+      <div class="labels">
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">30</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size" checked>
+          <span class="checkmark">31</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">32</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">33</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">34</span>
+        </label>
+      </div>
+      <button class="product__submit marquee" type="submit">
+        <span class="mar-default">Add to Cart</span>
+        <span class="mar-move">
+          <span class="mar-move__txt">Add to cart  -  30% discount if you buy before 12/12/20</span>
+          <span class="mar-move__txt">Add to cart  -  30% discount if you buy before 12/12/20</span>
+        </span>
+      </button>
+    </section>
   </div>
 
-  <script id="vs-not-load" type="x-shader/x-vertex">
-    precision mediump float;
 
-    attribute vec3 aVertexPosition;
-    attribute vec2 aTextureCoord;
-    uniform mat4 uMVMatrix;
-    uniform mat4 uPMatrix;
+  <!-- WebGL 3-->
+  <div class="modal" id="modal3">
+    <section class="modal__webgl">
+      <div class="modal-image"></div>
+      <progress class="progress" value="20" max="100"></progress>
+      <div class="canvas"></div>
+      <section class="slides multi-textures">
+        <img src="./src/img/displacement07.jpg" data-sampler="displacement">
+        <img src="./src/img/model/model-man-light-01.jpg">
+        <img src="./src/img/model/model-man-light-02.jpg">
+        <img src="./src/img/model/model-man-light-03.jpg">
+        <img src="./src/img/model/model-man-light-04.jpg">
+        <img src="./src/img/model/model-man-light-05.jpg">
+        <nav class="nav">
+          <button class="btn" data-goto="prev" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#242424" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 12H6M12 5l-7 7 7 7"/></svg>
+          </button>
+          <button class="btn" data-goto="next" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#242424" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h13M12 5l7 7-7 7"/></svg>
+          </button>
+        </nav>
+      </section>
+    </section>
+    <section class="modal__content product">
+      <h2 class="product__title product__title--modal">Producto dos</h2>
+      <button class="modal-close" type="button">
+        <svg class="svg-icon-close">
+          <use xlink:href="#svg-icon-close" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+        </svg>
+      </button>
+      <h3 class="product__price product__price--modal">36,90 €</h3>
+      <p class="product__description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam, dolor vitae. Reiciendis quidem consequatur maxime incidunt vitae nesciunt et molestiae, aliquid deserunt? Nostrum.</p>
+      <h4 class="product__legend-size product__legend-size--modal">Sizes</h4>
+      <div class="labels">
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">30</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size" checked>
+          <span class="checkmark">31</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">32</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">33</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">34</span>
+        </label>
+      </div>
+      <button class="product__submit marquee" type="submit">
+        <span class="mar-default">Add to Cart</span>
+        <span class="mar-move">
+          <span class="mar-move__txt">Add to cart  -  30% discount if you buy before 12/12/20</span>
+          <span class="mar-move__txt">Add to cart  -  30% discount if you buy before 12/12/20</span>
+        </span>
+      </button>
+    </section>
+  </div>
 
-    uniform mat4 activeTextureMatrix;
-    uniform mat4 nextTextureMatrix;
 
-    varying vec3 vVertexPosition;
-    varying vec2 vTextureCoord;
-    varying vec2 vActiveTextureCoord;
-    varying vec2 vNextTextureCoord;
+  <!-- WebGL 4-->
+  <div class="modal" id="modal4">
+    <section class="modal__webgl">
+      <div class="modal-image"></div>
+      <progress class="progress" value="33" max="100"></progress>
+      <div class="canvas"></div>
+      <section class="slides multi-textures">
+        <img src="./src/img/displacement09.jpg" data-sampler="displacement">
+        <img src="./src/img/model/model-woman-red-01.jpg">
+        <img src="./src/img/model/model-woman-red-02.jpg">
+        <img src="./src/img/model/model-woman-red-03.jpg">
+        <nav class="nav">
+          <button class="btn" data-goto="prev" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#242424" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 12H6M12 5l-7 7 7 7"/></svg>
+          </button>
+          <button class="btn" data-goto="next" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#242424" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h13M12 5l7 7-7 7"/></svg>
+          </button>
+        </nav>
+      </section>
+    </section>
+    <section class="modal__content product">
+      <h2 class="product__title product__title--modal">Woman red</h2>
+      <button class="modal-close" type="button">
+        <svg class="svg-icon-close">
+          <use xlink:href="#svg-icon-close" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+        </svg>
+      </button>
+      <h3 class="product__price product__price--modal">44,20 €</h3>
+      <p class="product__description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam, dolor vitae. Reiciendis quidem consequatur maxime incidunt vitae nesciunt et molestiae, aliquid deserunt? Nostrum.</p>
+      <h4 class="product__legend-size product__legend-size--modal">Sizes</h4>
+      <div class="labels">
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">30</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size" checked>
+          <span class="checkmark">31</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">32</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">33</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">34</span>
+        </label>
+      </div>
+      <button class="product__submit marquee" type="submit">
+        <span class="mar-default">Add to Cart</span>
+        <span class="mar-move">
+          <span class="mar-move__txt">Add to cart  -  30% discount if you buy before 12/12/20</span>
+          <span class="mar-move__txt">Add to cart  -  30% discount if you buy before 12/12/20</span>
+        </span>
+      </button>
+    </section>
+  </div>
 
-    uniform float uTransitionTimer;
-    void main() {
-      gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
 
-      vTextureCoord = aTextureCoord;
-      vActiveTextureCoord = (activeTextureMatrix * vec4(aTextureCoord, 0.0, 1.0)).xy;
-      vNextTextureCoord = (nextTextureMatrix * vec4(aTextureCoord, 0.0, 1.0)).xy;
+  <!-- WebGL 5-->
+  <div class="modal" id="modal5">
+    <section class="modal__webgl">
+      <div class="modal-image"></div>
+      <progress class="progress" value="33" max="100"></progress>
+      <div class="canvas"></div>
+      <section class="slides multi-textures">
+        <img src="./src/img/displacement11.jpg" data-sampler="displacement">
+        <img src="./src/img/model/model-man-brown-01.jpg">
+        <img src="./src/img/model/model-man-brown-02.jpg">
+        <img src="./src/img/model/model-man-brown-03.jpg">
+        <nav class="nav">
+          <button class="btn" data-goto="prev" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#242424" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 12H6M12 5l-7 7 7 7"/></svg>
+          </button>
+          <button class="btn" data-goto="next" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#242424" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h13M12 5l7 7-7 7"/></svg>
+          </button>
+        </nav>
+      </section>
+    </section>
+    <section class="modal__content product">
+      <h2 class="product__title product__title--modal">Man brown</h2>
+      <button class="modal-close" type="button">
+        <svg class="svg-icon-close">
+          <use xlink:href="#svg-icon-close" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+        </svg>
+      </button>
+      <h3 class="product__price product__price--modal">66,30 €</h3>
+      <p class="product__description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam, dolor vitae. Reiciendis quidem consequatur maxime incidunt vitae nesciunt et molestiae, aliquid deserunt? Nostrum.</p>
+      <h4 class="product__legend-size product__legend-size--modal">Sizes</h4>
+      <div class="labels">
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">30</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size" checked>
+          <span class="checkmark">31</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">32</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">33</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">34</span>
+        </label>
+      </div>
+      <button class="product__submit marquee" type="submit">
+        <span class="mar-default">Add to Cart</span>
+        <span class="mar-move">
+          <span class="mar-move__txt">Add to cart  -  30% discount if you buy before 12/12/20</span>
+          <span class="mar-move__txt">Add to cart  -  30% discount if you buy before 12/12/20</span>
+        </span>
+      </button>
+    </section>
+  </div>
 
-      vVertexPosition = aVertexPosition;
-    }
-  </script>
-  <script id="fs-not-load" type="x-shader/x-fragment">
-    precision mediump float;
 
-    varying vec3 vVertexPosition;
-    varying vec2 vTextureCoord;
-    varying vec2 vActiveTextureCoord;
-    varying vec2 vNextTextureCoord;
-
-    uniform float uTransitionTimer;
-
-    uniform sampler2D activeTexture;
-    uniform sampler2D nextTexture;
-    uniform sampler2D displacement;
-    void main() {
-
-      vec4 displacementTexture = texture2D(displacement, vTextureCoord);
-      float displacementFactor = (cos(uTransitionTimer / (60.0 / 3.141592)) + 1.0) / 2.0;
-      float effectFactor = 1.0;
-      
-      vec2 firstDisplacementCoords = vec2(vActiveTextureCoord.x - (1.0 - displacementFactor) * (displacementTexture.r * effectFactor), vActiveTextureCoord.y);
-      vec2 secondDisplacementCoords = vec2(vNextTextureCoord.x + displacementFactor * (displacementTexture.r * effectFactor), vNextTextureCoord.y);
-      vec4 firstDistortedColor = texture2D(activeTexture, firstDisplacementCoords);
-      vec4 secondDistortedColor = texture2D(nextTexture, secondDisplacementCoords);
-      vec4 finalColor = mix(secondDistortedColor, firstDistortedColor, displacementFactor);
-
-      finalColor = vec4(finalColor.rgb * finalColor.a, finalColor.a);
-      gl_FragColor = finalColor;
-    }
-  </script>
+  <!-- WebGL 6-->
+  <div class="modal" id="modal6">
+    <section class="modal__webgl">
+      <div class="modal-image"></div>
+      <progress class="progress" value="25" max="100"></progress>
+      <div class="canvas"></div>
+      <section class="slides multi-textures">
+        <img src="./src/img/displacement06.jpg" data-sampler="displacement">
+        <img src="./src/img/shirts/shirt-01.jpg">
+        <img src="./src/img/shirts/shirt-02.jpg">
+        <img src="./src/img/shirts/shirt-03.jpg">
+        <img src="./src/img/shirts/shirt-04.jpg">
+        <nav class="nav">
+          <button class="btn" data-goto="prev" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#242424" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 12H6M12 5l-7 7 7 7"/></svg>
+          </button>
+          <button class="btn" data-goto="next" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#242424" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h13M12 5l7 7-7 7"/></svg>
+          </button>
+        </nav>
+      </section>
+    </section>
+    <section class="modal__content product">
+      <h2 class="product__title product__title--modal">Shirt molona</h2>
+      <button class="modal-close" type="button">
+        <svg class="svg-icon-close">
+          <use xlink:href="#svg-icon-close" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+        </svg>
+      </button>
+      <h3 class="product__price product__price--modal">15,15 €</h3>
+      <p class="product__description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam, dolor vitae. Reiciendis quidem consequatur maxime incidunt vitae nesciunt et molestiae, aliquid deserunt? Nostrum.</p>
+      <h4 class="product__legend-size product__legend-size--modal">Sizes</h4>
+      <div class="labels">
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">30</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size" checked>
+          <span class="checkmark">31</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">32</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">33</span>
+        </label>
+        <label class="container">
+          <input type="radio" name="size">
+          <span class="checkmark">34</span>
+        </label>
+      </div>
+      <button class="product__submit marquee" type="submit">
+        <span class="mar-default">Add to Cart</span>
+        <span class="mar-move">
+          <span class="mar-move__txt">Add to cart  -  30% discount if you buy before 12/12/20</span>
+          <span class="mar-move__txt">Add to cart  -  30% discount if you buy before 12/12/20</span>
+        </span>
+      </button>
+    </section>
+  </div>
 
 </body>
 </html>

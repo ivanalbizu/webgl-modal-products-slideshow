@@ -1,7 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;500&family=Big+Shoulders+Stencil+Text&display=swap");
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
-  min-height: 100%;
+  height: 100%;
 }
 
 body {
@@ -9,28 +13,43 @@ body {
   font-family: 'Big Shoulders Display', cursive;
   background: #fff;
   color: #242424;
-  overflow: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  font-weight: 400;
 }
 
 .main {
+  width: 1420px;
+  max-width: 100%;
+  margin: auto;
+}
+
+.modal {
   display: grid;
   grid-template-columns: 3fr 4fr;
   grid-template-rows: 1fr;
   gap: 0px;
   grid-template-areas: "left right";
   width: 100vw;
+  margin: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 2000;
+  visibility: hidden;
+  backface-visibility: hidden;
+  background-color: #fff;
+  transition: background .5s ease 0s;
+  overflow-y: auto;
 }
 
-.content {
-  grid-area: right;
-}
-
-.slides {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.wrapper {
+.modal__webgl {
   grid-area: left;
   width: 100%;
   height: 100vh;
@@ -40,6 +59,22 @@ body {
   grid-template-rows: 1fr;
   grid-gap: 0;
   position: relative;
+  visibility: hidden;
+}
+
+.modal__webgl:hover .nav, .modal__webgl:focus-within .nav {
+  opacity: 1;
+  transition: opacity .2s ease-out;
+}
+
+.modal__content {
+  grid-area: right;
+  padding: clamp(20px, 5vw, 600px);
+}
+
+.slides {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .canvas {
@@ -55,7 +90,7 @@ body {
 
 .multi-textures {
   grid-area: 1 / 1 / 1 / 1;
-  z-index: 15;
+  z-index: 11;
   align-content: center;
 }
 
@@ -102,11 +137,6 @@ body {
   transition: opacity .2s ease-out, width .3s ease-in-out;
 }
 
-.wrapper:hover .nav, .wrapper:focus-within .nav {
-  opacity: 1;
-  transition: opacity .2s ease-out;
-}
-
 .btn {
   display: flex;
   justify-content: center;
@@ -123,77 +153,6 @@ body {
 .btn svg,
 .btn svg path {
   pointer-events: none;
-}
-
-.open-modal {
-  position: fixed;
-  top: 4px;
-  right: 18px;
-  background-color: rgba(0, 0, 0, 0.9);
-  z-index: 18;
-}
-
-.open-modal button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  cursor: pointer;
-}
-
-.open-modal .js-close-modal {
-  display: none;
-}
-
-.modal {
-  position: fixed;
-  right: 0;
-  width: 300px;
-  top: 0;
-  bottom: 0;
-  z-index: 17;
-  overflow-y: auto;
-  transform: translateX(300px);
-  transition: transform .3s ease-in-out;
-}
-
-.modal img {
-  max-width: 100%;
-  z-index: 19;
-}
-
-.modal__content {
-  display: flex;
-  flex-wrap: wrap;
-  overflow-y: auto;
-  background-color: rgba(0, 0, 0, 0.85);
-  padding: 2.5em 1.5em;
-}
-
-.modal__content img {
-  border: 2px dashed #fff;
-}
-
-.modal__content img:not(:last-of-type) {
-  margin-bottom: 2em;
-}
-
-.modal__content img.active {
-  border-style: solid;
-}
-
-.modal-active .open-modal .js-close-modal {
-  display: flex;
-}
-
-.modal-active .open-modal .js-open-modal {
-  display: none;
-}
-
-.modal-active .modal {
-  transform: translateX(0px);
-  transition: transform .3s ease-in-out;
 }
 
 .progress {
@@ -224,33 +183,20 @@ body {
   border-radius: 0;
 }
 
-@media (max-width: 575px) {
-  .main {
+@media (max-width: 768px) {
+  .modal {
     grid-template-columns: 1fr;
     grid-template-areas: "left" "right";
   }
-  .wrapper {
-    height: 45vh;
+  .modal__webgl {
+    height: 55vh;
   }
   .canvas {
-    height: 45vh;
+    height: 55vh;
   }
   .progress {
-    width: calc(45vh - 16px);
+    width: calc(55vh - 16px);
   }
-}
-
-h1, h2, h3, h4, h5, h6, p {
-  margin-block-start: 0;
-  margin-block-end: 0;
-  margin-inline-start: 0;
-  margin-inline-end: 0;
-  font-weight: 400;
-}
-
-legend {
-  padding-inline-start: 0;
-  padding-inline-end: 0;
 }
 
 .labels {
@@ -299,30 +245,37 @@ legend {
   align-items: center;
 }
 
-.content {
-  padding: clamp(40px, 5vw, 600px);
-}
-
 .product {
   display: flex;
   flex-direction: column;
+  margin-bottom: .7em;
 }
 
 .product__title {
   font-family: 'Big Shoulders Stencil Text', cursive;
-  font-size: clamp(30px, 5vw, 120px);
+  font-size: clamp(18px, 3vw, 28px);
   line-height: 1.1;
   margin-bottom: .2em;
 }
 
+.product__title--modal {
+  font-size: clamp(30px, 5vw, 120px);
+  z-index: 99999;
+}
+
 .product__price {
-  font-size: clamp(20px, 2vw, 100px);
+  font-size: clamp(18px, 3vw, 24px);
   line-height: 1.1;
   margin-bottom: .7em;
 }
 
-.product__content {
-  font-size: clamp(17px, 3vw, 24px);
+.product__price--modal {
+  font-size: clamp(20px, 2vw, 100px);
+  z-index: 99999;
+}
+
+.product__description {
+  font-size: clamp(17px, 3vw, 20px);
   line-height: 1.1;
   margin-bottom: 1.8em;
 }
@@ -331,6 +284,10 @@ legend {
   font-size: clamp(15px, 2.8vw, 22px);
   line-height: 1.1;
   margin-bottom: .4em;
+}
+
+.product__legend-size--modal {
+  font-size: clamp(15px, 2.8vw, 22px);
 }
 
 .product__submit {
@@ -350,6 +307,18 @@ legend {
 
 .product__submit:focus {
   outline: none;
+}
+
+.products {
+  display: flex;
+  justify-content: space-around;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.products .product {
+  width: 30%;
+  cursor: pointer;
 }
 
 .marquee {
@@ -394,4 +363,154 @@ legend {
   100% {
     left: -100%;
   }
+}
+
+.svg-icon-close {
+  width: 24px;
+  height: 24px;
+}
+
+.product__img {
+  width: 100%;
+  height: 200px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  margin-bottom: .6em;
+}
+
+.modal-overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0);
+  transition: background .5s ease 0s;
+}
+
+.modal--active {
+  visibility: visible;
+}
+
+.modal--active .modal__webgl {
+  visibility: visible;
+}
+
+.modal-image {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  z-index: 1;
+  grid-area: 1 / 1 / 1 / 1;
+  mix-blend-mode: multiply;
+}
+
+.modal-close {
+  position: absolute;
+  right: 7px;
+  top: 7px;
+  display: flex;
+  z-index: 12;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.modal-close:focus {
+  outline: none;
+}
+
+.custom-scroll .scrollscreen--track {
+  width: 17px;
+  background: #fff;
+}
+
+.custom-scroll .scrollscreen--slider {
+  padding: .3em;
+}
+
+.custom-scroll .scrollscreen--slider::after {
+  background: #5f6165;
+  border-radius: 9999em;
+}
+
+.custom-scroll .scrollscreen {
+  position: relative;
+  height: 100%;
+}
+
+.custom-scroll .scrollscreen--track {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  pointer-events: none;
+}
+
+.custom-scroll .scrollscreen--slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
+  height: 0;
+  border: none;
+  background: transparent;
+  pointer-events: none;
+}
+
+.custom-scroll .scrollscreen--slider::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.custom-scroll .scrollscreen--content {
+  position: relative;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.custom-scroll *[dir='rtl'] .scrollscreen--track {
+  left: 0;
+  right: auto;
+}
+
+.is-fade-in .modal-overlay {
+  visibility: visible;
+  background-color: white;
+}
+
+.is-fade-out .modal-image {
+  z-index: 3000;
+}
+
+.is-fade-out .modal {
+  background-color: rgba(255, 255, 255, 0);
+  transition: background .8s linear .6s;
+}
+
+.is-fade-out .modal .modal__webgl,
+.is-fade-out .modal .product__img,
+.is-fade-out .modal .product__title,
+.is-fade-out .modal .product__price,
+.is-fade-out .modal .modal-close {
+  visibility: hidden;
+}
+
+.is-fade-out .modal .product__description,
+.is-fade-out .modal .product__legend-size,
+.is-fade-out .modal .labels,
+.is-fade-out .modal .product__submit {
+  opacity: 0;
+  transition: opacity .5s linear;
+}
+
+.is-fade-out [data-modal-active="true"] .product__img {
+  visibility: hidden;
 }
