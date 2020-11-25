@@ -241,9 +241,6 @@ class WebglSlides {
 	}
 }
 
-const isMobileDevice = () => {
-	return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
-}
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -331,8 +328,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	}
 
+	let splits = document.querySelectorAll('[data-text-animation]');
+
+	splits.forEach(split => {
+		let splitTextContent = split.textContent;
+	
+		const span = document.createElement('span')
+		span.classList.add('text-animation')
+		span.appendChild(createFrameSlides(splitTextContent))		
+		split.appendChild(span)
+	})
 })
 
+const randomRange = (min, max) => Math.random() * (max - min) + min
+
+const isMobileDevice = () => (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1)
+
+const elFactory = (type, attributes, ...children) => {
+	const el = document.createElement(type)
+
+	for (const key in attributes) {
+		el.setAttribute(key, attributes[key])
+	}
+
+	children.forEach(child => {
+		if (typeof child === 'string') el.appendChild(document.createTextNode(child))
+		else el.appendChild(child)
+	})
+
+	return el
+}
+
+const createFrameSlides = chars => {
+	const fragment = new DocumentFragment();
+	chars = chars.split(' ');
+	chars.forEach((char, index) => {
+		const el = elFactory(
+			'span', {}, `${char}\u00A0`
+		)
+		fragment.appendChild(el);
+	})
+	
+	return fragment;
+}
 
 const requestAnimationFramePromise = () => {
 	return new Promise(resolve => requestAnimationFrame(resolve))
@@ -456,24 +494,38 @@ const closeModal = () => {
 	modalState.img.style.backgroundImage = `url(${src})`
 
 	const cloneProductImg = modalState.img.cloneNode(true)
-	transtionFrom(cloneProductImg, modalState.img, productState.img)
 	const cloneProductTitle = modalState.title.cloneNode(true)
-	transtionFrom(cloneProductTitle, modalState.title, productState.title)
 	const cloneProductPrice = modalState.price.cloneNode(true)
-	transtionFrom(cloneProductPrice, modalState.price, productState.price)
+
+	const spans = [...document.querySelectorAll('.modal--active [data-text-animation] .text-animation span')]
+	const spanHeight = spans[0].getBoundingClientRect().height
+	spans.forEach(span => span.style.height = '0px')
 
 	const animationAll = async () => {
 		await asyncImageLoader(src)
+		const spanPromises = spans.map(span => {
+			return animate(span, {
+				transition: `height ${randomRange(200, 800)}ms linear ${randomRange(10, 1000)}ms`,
+				height: `${spanHeight}px`
+			}, 'height')
+		})
+
+		await Promise.all(spanPromises)
+		
 		document.body.classList.add('is-fade-out')
+		transtionFrom(cloneProductTitle, modalState.title, productState.title)
 		animate(cloneProductTitle, transitionTo(productState.title, 'top .8s ease-in .1s, left .8s ease-in .1s, width .8s ease-in .1s, height .8s ease-in .1s, font-size .8s ease-in .1s'), 'width')
+		transtionFrom(cloneProductPrice, modalState.price, productState.price)
 		animate(cloneProductPrice, transitionTo(productState.price, 'top .8s ease-in .15s, left .8s ease-in .15s, width .8s ease-in .15s, height .8s ease-in .15s, font-size .8s ease-in .15s'), 'width')
 		//webgl[currentWebGL].removePlanes()
+		transtionFrom(cloneProductImg, modalState.img, productState.img)
 		await animate(cloneProductImg, transitionTo(productState.img, 'top 1.5s ease-in 0s, left 1.5s ease-in 0s, width 1.5s ease-in 0s, height 1.5s ease-in 0s'), 'width')
 		productState.product.setAttribute('data-modal-active', false)
 		modalState.modal.classList.remove('modal--active')
 		cloneProductImg.remove()
 		cloneProductTitle.remove()
 		cloneProductPrice.remove()
+		spans.forEach(span => span.style.height = 'initial')
 		document.body.classList.remove('is-fade-out')
 	}
 

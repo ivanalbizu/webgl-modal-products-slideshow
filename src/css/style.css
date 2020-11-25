@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;500&family=Big+Shoulders+Stencil+Text&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Text&family=Montserrat:wght@200;300;400&display=swap");
 * {
   box-sizing: border-box;
 }
@@ -10,7 +10,8 @@ body {
 
 body {
   margin: 0;
-  font-family: 'Big Shoulders Display', cursive;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
   background: #fff;
   color: #242424;
 }
@@ -20,7 +21,7 @@ h1, h2, h3, h4, h5, h6, p {
   margin-block-end: 0;
   margin-inline-start: 0;
   margin-inline-end: 0;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 .main {
@@ -275,19 +276,23 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .product__description {
-  font-size: clamp(17px, 3vw, 20px);
-  line-height: 1.1;
-  margin-bottom: 1.8em;
+  font-size: clamp(15px, 1.8vw, 17px);
+  line-height: 1.2;
+  margin-bottom: 1.5em;
+}
+
+.product__description--modal {
+  font-size: clamp(15px, 2vw, 18px);
 }
 
 .product__legend-size {
-  font-size: clamp(15px, 2.8vw, 22px);
+  font-size: clamp(15px, 2.5vw, 20px);
   line-height: 1.1;
   margin-bottom: .4em;
 }
 
 .product__legend-size--modal {
-  font-size: clamp(15px, 2.8vw, 22px);
+  font-size: clamp(15px, 1.2vw, 21px);
 }
 
 .product__submit {
@@ -295,8 +300,8 @@ h1, h2, h3, h4, h5, h6, p {
   cursor: pointer;
   border: 0;
   appearance: none;
-  font-family: 'Big Shoulders Display', cursive;
-  font-size: clamp(17px, 3vw, 24px);
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(15px, 1.6vw, 22px);
   background-color: rgba(0, 0, 0, 0.95);
   color: #fff;
   padding: .8em .3em;
@@ -372,7 +377,7 @@ h1, h2, h3, h4, h5, h6, p {
 
 .product__img {
   width: 100%;
-  height: 200px;
+  height: 170px;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -513,4 +518,31 @@ h1, h2, h3, h4, h5, h6, p {
 
 .is-fade-out [data-modal-active="true"] .product__img {
   visibility: hidden;
+}
+
+[data-text-animation] {
+  position: relative;
+}
+
+[data-text-animation] .text-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+[data-text-animation] .text-animation > span {
+  position: relative;
+  display: inline-block;
+  height: initial;
+  color: transparent;
+}
+
+[data-text-animation] .text-animation > span::before {
+  content: "";
+  background-color: #fff;
+  width: 100%;
+  display: block;
+  position: absolute;
+  height: inherit;
 }
