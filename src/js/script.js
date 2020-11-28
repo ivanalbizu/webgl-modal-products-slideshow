@@ -440,9 +440,9 @@ const openModal = event => {
 	product.style.pointerEvents = 'none'
 	product.setAttribute('data-modal-active', true)
 
-	const spans = [...modal.querySelectorAll('.product__description .text-animation span')]
-	const spanHeight = `${Math.ceil(spans[0].getBoundingClientRect().height)}px`
-	spans.forEach(span => span.style.height = spanHeight)
+	const descriptionSpans = [...modal.querySelectorAll('.product__description .text-animation span')]
+	const descriptionSpanHeight = `${Math.ceil(descriptionSpans[0].getBoundingClientRect().height)}px`
+	descriptionSpans.forEach(span => span.style.height = descriptionSpanHeight)
 
 	productState = {
 		product,
@@ -457,7 +457,7 @@ const openModal = event => {
 		title: modal.querySelector('.product__title'),
 		price: modal.querySelector('.product__price'),
 		description: modal.querySelector('.product__description'),
-		descriptionHeight: spanHeight
+		descriptionSpanHeight: descriptionSpanHeight
 	}
 
 	const cloneProductImg = productState.img.cloneNode(true)
@@ -486,7 +486,7 @@ const openModal = event => {
 		animate(cloneProductPrice, transitionTo(modalState.price, 'top .9s ease-in .2s, left .9s ease-in .2s, width .9s ease-in .2s, height .9s ease-in .2s, font-size .9s ease-in .2s'), 'width')
 		await animate(cloneProductImg, transitionTo(modalState.img, 'top 1.2s linear .2s, left 1.2s cubic-bezier(0.4, 1, 0.7, 1) .2s, width 1.2s cubic-bezier(0.4, 1, 0.7, 1) .2s, height 1.2s linear .2s'), 'left')
 
-		const spanPromises = spans.map(span => {
+		const descriptionSpanPromises = descriptionSpans.map(span => {
 			return animate(span, {
 				transition: `height ${randomRange(200, 800)}ms linear ${randomRange(10, 1000)}ms`,
 				height: `0px`
@@ -494,7 +494,7 @@ const openModal = event => {
 		})
 
 		modal.classList.add('modal--active')
-		await Promise.all(spanPromises)
+		await Promise.all(descriptionSpanPromises)
 
 		cloneProductImg.remove()
 		cloneProductTitle.remove()
@@ -521,18 +521,18 @@ const closeModal = () => {
 	const cloneProductTitle = modalState.title.cloneNode(true)
 	const cloneProductPrice = modalState.price.cloneNode(true)
 
-	const spans = [...modalState.description.querySelectorAll('.text-animation span')]
+	const descriptionSpans = [...modalState.description.querySelectorAll('.text-animation span')]
 
 	const animationAll = async () => {
 		await asyncImageLoader(src)
-		const spanPromises = spans.map(span => {
+		const descriptionSpanPromises = descriptionSpans.map(span => {
 			return animate(span, {
 				transition: `height ${randomRange(100, 700)}ms linear ${randomRange(1, 800)}ms`,
-				height: modalState.descriptionHeight,
+				height: modalState.descriptionSpanHeight,
 			}, 'height')
 		})
 
-		await Promise.all(spanPromises)
+		await Promise.all(descriptionSpanPromises)
 
 		document.body.classList.add('is-fade-out')
 		transtionFrom(cloneProductTitle, modalState.title, productState.title)
@@ -546,7 +546,7 @@ const closeModal = () => {
 		cloneProductImg.remove()
 		cloneProductTitle.remove()
 		cloneProductPrice.remove()
-		spans.forEach(span => span.style.height = 'initial')
+		descriptionSpans.forEach(span => span.style.height = 'initial')
 		document.body.classList.remove('is-fade-out', 'is-animating')
 	}
 
