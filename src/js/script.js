@@ -97,10 +97,8 @@ class WebglSlides {
 	arrowEvent(activeTexture, nextTexture) {
 		this.slidesState.navs.forEach(nav => {
 			nav.addEventListener('click', event => {
-
 				const to = event.target.getAttribute('data-goto')
 				this._animate(to, activeTexture, nextTexture)
-
 			})
 		})
 	}
@@ -251,91 +249,91 @@ document.addEventListener('DOMContentLoaded', () => {
 	closes.forEach(close => close.addEventListener('click', closeModal, false))
 
 	if (!isMobileDevice()) {
-		const wakeyFixRequired = 'CSS' in window && typeof CSS.supports === 'function' && !CSS.supports('-webkit-appearance', 'none');
+		const wakeyFixRequired = 'CSS' in window && typeof CSS.supports === 'function' && !CSS.supports('-webkit-appearance', 'none')
 
-		const ROOT_CLASS = 'scrollscreen';
-		document.documentElement.classList.add('custom-scroll');
+		const ROOT_CLASS = 'scrollscreen'
+		document.documentElement.classList.add('custom-scroll')
 
 		const createElement = (tag, name) => {
-			const el = document.createElement(tag);
-			el.className = `${ROOT_CLASS}--${name}`;
-			return el;
+			const el = document.createElement(tag)
+			el.className = `${ROOT_CLASS}--${name}`
+			return el
 		}
 
-		const createScrollscreen = (root) => {
+		const createScrollscreen = root => {
 
 			const fragment = document.createDocumentFragment();
 			[...root.childNodes].forEach(child => {
-				fragment.appendChild(child);
-			});
+				fragment.appendChild(child)
+			})
 
-			const content = createElement('div', 'content');
-			content.appendChild(fragment);
-			root.appendChild(content);
+			const content = createElement('div', 'content')
+			content.appendChild(fragment)
+			root.appendChild(content)
 
-			const track = createElement('div', 'track');
-			root.appendChild(track);
+			const track = createElement('div', 'track')
+			root.appendChild(track)
 
-			const slider = createElement('div', 'slider');
-			track.appendChild(slider);
+			const slider = createElement('div', 'slider')
+			track.appendChild(slider)
 
-			let pendingFrame = null;
+			let pendingFrame = null
 
 			const redraw = () => {
 
-				cancelAnimationFrame(pendingFrame);
+				cancelAnimationFrame(pendingFrame)
 
 				pendingFrame = requestAnimationFrame(() => {
 
-					const contentHeight = content.scrollHeight;
-					const containerHeight = root.offsetHeight;
-					const percentageVisible = containerHeight / contentHeight;
-					const sliderHeight = percentageVisible * containerHeight;
-					const percentageOffset = content.scrollTop / (contentHeight - containerHeight);
-					const sliderOffset = percentageOffset * (containerHeight - sliderHeight);
+					const contentHeight = content.scrollHeight
+					const containerHeight = root.offsetHeight
+					const percentageVisible = containerHeight / contentHeight
+					const sliderHeight = percentageVisible * containerHeight
+					const percentageOffset = content.scrollTop / (contentHeight - containerHeight)
+					const sliderOffset = percentageOffset * (containerHeight - sliderHeight)
 
-					track.style.opacity = percentageVisible === 1 ? 0 : 1;
+					track.style.opacity = percentageVisible === 1 ? 0 : 1
 
 					slider.style.cssText = `
             height: ${sliderHeight}px;
             transform: translateY(${sliderOffset}px);
-          `;
-				});
+          `
+				})
 
 			}
 
-			content.addEventListener('scroll', redraw);
-			window.addEventListener('resize', redraw);
+			content.addEventListener('scroll', redraw)
+			window.addEventListener('resize', redraw)
 
-			redraw();
+			redraw()
 
-			if (!wakeyFixRequired) return;
+			if (!wakeyFixRequired) return
 
 			const wakey = () => {
 				requestAnimationFrame(() => {
-					const offset = content.scrollTop;
-					content.scrollTop = offset + 1;
-					content.scrollTop = offset;
-				});
+					const offset = content.scrollTop
+					content.scrollTop = offset + 1
+					content.scrollTop = offset
+				})
 			}
 
-			root.addEventListener('mouseenter', wakey);
+			root.addEventListener('mouseenter', wakey)
 
-			wakey();
+			wakey()
 		}
 
-		[...document.querySelectorAll(`.${ROOT_CLASS}`)].forEach(createScrollscreen);
+		[...document.querySelectorAll(`.${ROOT_CLASS}`)].forEach(createScrollscreen)
 
 	}
 
-	let splits = document.querySelectorAll('[data-text-animation]');
+	let splits = document.querySelectorAll('[data-text-animation]')
 
 	splits.forEach(split => {
-		let splitTextContent = split.textContent;
-	
+		let splitTextContent = split.textContent
+
 		const span = document.createElement('span')
 		span.classList.add('text-animation')
-		span.appendChild(createFrameSlides(splitTextContent))		
+		span.appendChild(createFrameSlides(splitTextContent))
 		split.appendChild(span)
 	})
 })
@@ -360,21 +358,20 @@ const elFactory = (type, attributes, ...children) => {
 }
 
 const createFrameSlides = chars => {
-	const fragment = new DocumentFragment();
-	chars = chars.split(' ');
-	chars.forEach((char, index) => {
+	const fragment = new DocumentFragment()
+	chars = chars.split(' ')
+	chars.forEach(char => {
 		const el = elFactory(
 			'span', {}, `${char}\u00A0`
 		)
-		fragment.appendChild(el);
+		fragment.appendChild(el)
 	})
-	
-	return fragment;
+
+	return fragment
 }
 
-const requestAnimationFramePromise = () => {
-	return new Promise(resolve => requestAnimationFrame(resolve))
-}
+const requestAnimationFramePromise = () => new Promise(resolve => requestAnimationFrame(resolve))
+
 const transitionEndPromise = (element, last) => {
 	return new Promise(resolve => {
 		element.addEventListener('transitionend', event => {
@@ -418,6 +415,16 @@ const transitionTo = (el, cssTransition) => {
 	}
 }
 
+const asyncImageLoader = url => {
+	return new Promise((resolve, reject) => {
+		const image = new Image()
+		image.src = url
+		image.onload = () => resolve(image)
+		image.onerror = () => reject(new Error('could not load image'))
+	})
+}
+
+// globals vars to control current modal state
 let modalState = {}
 let productState = {}
 let webgl = {}
@@ -546,12 +553,3 @@ const closeModal = () => {
 	animationAll()
 
 }
-
-const asyncImageLoader = url => {
-	return new Promise((resolve, reject) => {
-		const image = new Image()
-		image.src = url
-		image.onload = () => resolve(image)
-		image.onerror = () => reject(new Error('could not load image'))
-	})
-}    
