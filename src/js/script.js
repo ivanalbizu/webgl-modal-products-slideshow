@@ -556,7 +556,8 @@ const closeModal = () => {
 				height: modalState.descriptionSpanHeight,
 			}, 'height')
 		})
-
+		const labelChecked = modalState.modal.querySelector('.labels input:checked')
+		labelChecked.checked = false
 		await Promise.all(descriptionSpanPromises)
 
 		document.body.classList.add('is-fade-out')
@@ -566,6 +567,7 @@ const closeModal = () => {
 		animate(cloneProductPrice, transitionTo(productState.price, 'top .8s ease-in .15s, left .8s ease-in .15s, width .8s ease-in .15s, height .8s ease-in .15s, font-size .8s ease-in .15s'), 'width')
 		transtionFrom(cloneProductImg, modalState.img, productState.img)
 		await animate(cloneProductImg, transitionTo(productState.img, 'top 1.5s ease-in 0s, left 1.5s ease-in 0s, width 1.5s ease-in 0s, height 1.5s ease-in 0s'), 'width')
+		labelChecked.checked = true
 		productState.product.setAttribute('data-modal-active', false)
 		modalState.modal.classList.remove('modal--active')
 		cloneProductImg.remove()
