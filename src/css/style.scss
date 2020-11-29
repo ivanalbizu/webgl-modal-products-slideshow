@@ -167,24 +167,6 @@ h1, h2, h3, h4, h5, h6, p {
 	border-radius: 0;
 }
 
-
-@media (max-width: 768px) {
-	.modal {
-		grid-template-columns: 1fr;
-		grid-template-areas:
-			"left"
-			"right";
-		&__webgl {
-			height: 55vh;
-		}
-	}
-	.canvas {
-		height: 55vh;
-	}
-	.progress {
-		width: calc(55vh - 16px);
-	}
-}
 :root {
 	--label-w: 36;
 	--label-h: 24;
@@ -584,6 +566,37 @@ h1, h2, h3, h4, h5, h6, p {
 				position: absolute;
 				height: inherit;
 			}
+		}
+	}
+}
+
+
+@media (max-width: 768px) {
+	.modal {
+		grid-template-columns: 1fr;
+		grid-template-areas:
+			"left"
+			"right";
+		&__webgl {
+			height: 55vh;
+		}
+	}
+	.canvas {
+		height: 55vh;
+	}
+	.progress {
+		width: calc(55vh - 16px);
+	}
+	.products {
+		.product {
+			width: 48%;
+		}
+	}
+}
+@media (max-width: 575px) {
+	.products {
+		.product {
+			width: 98%;
 		}
 	}
 }
