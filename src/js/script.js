@@ -381,6 +381,10 @@ const transitionEndPromise = (element, last) => {
 		}, true)
 	})
 }
+// Caution with the third parameter: 'last'
+// When the property is short-hand, like background, border, stroke...
+// but we only modify one of them, the Promise never resolve and animation never finish
+// For example, if we modify stroke-dasharray, we must specify stroke-dasharray and not the stroke property
 const animate = async (element, stylz, last) => {
 	Object.assign(element.style, stylz)
 	return transitionEndPromise(element, last).then(_ => requestAnimationFramePromise())
@@ -457,7 +461,11 @@ const openModal = event => {
 		title: modal.querySelector('.product__title'),
 		price: modal.querySelector('.product__price'),
 		description: modal.querySelector('.product__description'),
-		descriptionSpanHeight: descriptionSpanHeight
+		descriptionSpanHeight: descriptionSpanHeight,
+		label: modal.querySelector('.labels'),
+		labelSizes: [...modal.querySelectorAll('.labels .label')],
+		shapesRect: [...modal.querySelectorAll('.labels .label .shape-rect')],
+		labelInputChecked: modal.querySelector('.labels input:checked')
 	}
 
 	const cloneProductImg = productState.img.cloneNode(true)
@@ -467,6 +475,9 @@ const openModal = event => {
 	transtionFrom(cloneProductTitle, productState.title, product)
 	const cloneProductPrice = productState.price.cloneNode(true)
 	transtionFrom(cloneProductPrice, productState.price, product)
+
+	modalState.label.classList.add('labels--animating')
+	modalState.labelInputChecked.checked = false
 
 	const animationAll = async () => {
 		if (!webgl[dataModalID]) {
@@ -492,9 +503,23 @@ const openModal = event => {
 				height: `0px`
 			}, 'height')
 		})
+		let delayLabels = 0
+		let transtionTimeLabels = 800
+		const labelW = parseInt(window.getComputedStyle(modalState.labelSizes[0], null).getPropertyValue('width'), 10)
+		const labelH = parseInt(window.getComputedStyle(modalState.labelSizes[0], null).getPropertyValue('height'), 10)
+		const labelSizesPromises = modalState.labelSizes.map(label => {
+			delayLabels += (labelW/(labelW*2 + labelH*2))*transtionTimeLabels
+			return animate(label.querySelector('.shape-rect'), {
+				transition: `stroke-dashoffset ${transtionTimeLabels}ms linear ${delayLabels}ms`,
+				strokeDashoffset: '0'
+			}, 'stroke-dashoffset')
+		})
 
 		modal.classList.add('modal--active')
-		await Promise.all(descriptionSpanPromises)
+		await Promise.all([...descriptionSpanPromises, ...labelSizesPromises])
+		modalState.shapesRect.forEach(el => el.removeAttribute('style'))
+		modalState.labelInputChecked.checked = true
+		modalState.label.classList.remove('labels--animating')
 
 		cloneProductImg.remove()
 		cloneProductTitle.remove()
