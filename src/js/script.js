@@ -440,7 +440,7 @@ const openModal = event => {
 
 	modalState = {
 		modal,
-		img: modal.querySelector('.modal-image'),
+		img: modal.querySelector('.modal__image'),
 		title: modal.querySelector('.product__title'),
 		price: modal.querySelector('.product__price'),
 		description: modal.querySelector('.product__description'),

@@ -2,6 +2,23 @@
 * {
 	box-sizing: border-box;
 }
+::-webkit-progress-bar {
+	background-color: rgba(0, 0, 0, .1);
+	border-radius: 0;
+}
+::-webkit-progress-value {
+	background-color: rgba(0, 0, 0, .5);
+	border-radius: 0;
+}
+::-moz-progress-bar {
+	background-color: rgba(0, 0, 0, .5);
+	border-radius: 0;
+}
+:root {
+	--label-w: 36;
+	--label-h: 24;
+	--dasharray: calc(calc(var(--label-w) * 2) + calc(var(--label-h) * 2))
+}
 html,
 body {
 	height: 100%;
@@ -154,24 +171,6 @@ h1, h2, h3, h4, h5, h6, p {
 	border-radius: 0;
 	border: 0;
 }
-::-webkit-progress-bar {
-	background-color: rgba(0, 0, 0, .1);
-	border-radius: 0;
-}
-::-webkit-progress-value {
-	background-color: rgba(0, 0, 0, .5);
-	border-radius: 0;
-}
-::-moz-progress-bar {
-	background-color: rgba(0, 0, 0, .5);
-	border-radius: 0;
-}
-
-:root {
-	--label-w: 36;
-	--label-h: 24;
-	--dasharray: calc(calc(var(--label-w) * 2) + calc(var(--label-h) * 2))
-}
 
 .labels {
 	display: flex;
@@ -257,12 +256,20 @@ h1, h2, h3, h4, h5, h6, p {
 	}
 }
 
-
 // Product content
 .product {
 	display: flex;
 	flex-direction: column;
 	margin-bottom: .7em;
+	&__img {
+		width: 100%;
+		height: 170px;
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center;
+		border: 1px solid rgba(0,0,0,.2);
+		margin-bottom: .6em;
+	}
 	&__title {
 		font-family: 'Big Shoulders Stencil Text', cursive;
 		font-size: clamp(18px, 3vw, 28px);
@@ -390,16 +397,6 @@ h1, h2, h3, h4, h5, h6, p {
 	100% { left: -100%; }
 }
 
-.product__img {
-	width: 100%;
-	height: 170px;
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center;
-	border: 1px solid rgba(0,0,0,.2);
-	margin-bottom: .6em;
-}
-
 .modal {
 	&-overlay {
 		position: fixed;
@@ -418,8 +415,8 @@ h1, h2, h3, h4, h5, h6, p {
 			visibility: visible;
 		}
 	}
-	
-	&-image {
+
+	&__image {
 		background-repeat: no-repeat;
 		background-position: center;
 		background-size: cover;
@@ -446,8 +443,6 @@ h1, h2, h3, h4, h5, h6, p {
 		}
 	}
 }
-
-
 
 .custom-scroll {
   .scrollscreen {
@@ -520,7 +515,7 @@ h1, h2, h3, h4, h5, h6, p {
 } 
 
 .is-fade-out {
-	.modal-image {
+	.modal__image {
 		z-index: 3000;
 	}
 	.modal {
