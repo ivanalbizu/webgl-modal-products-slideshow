@@ -444,11 +444,7 @@ const openModal = event => {
 		title: modal.querySelector('.product__title'),
 		price: modal.querySelector('.product__price'),
 		description: modal.querySelector('.product__description'),
-		descriptionSpanHeight: descriptionSpanHeight,
-		label: modal.querySelector('.labels'),
-		labelSizes: [...modal.querySelectorAll('.labels .label')],
-		shapesRect: [...modal.querySelectorAll('.labels .label .shape-rect')],
-		labelInputChecked: modal.querySelector('.labels input:checked')
+		descriptionSpanHeight: descriptionSpanHeight
 	}
 
 	const cloneProductImg = productState.img.cloneNode(true)
@@ -459,8 +455,18 @@ const openModal = event => {
 	const cloneProductPrice = productState.price.cloneNode(true)
 	transtionFrom(cloneProductPrice, productState.price, product)
 
-	modalState.label.classList.add('labels--animating')
-	modalState.labelInputChecked.checked = false
+	const labels = modal.querySelector('.labels')
+	const labelSizes = [...labels.querySelectorAll('.label')]
+	const shapesRect = [...labels.querySelectorAll('.shape-rect')]
+	const labelInputChecked = modal.querySelector('.labels input:checked')
+
+	let delayLabels = 0
+	let transtionTimeLabels = 800
+	const labelW = parseInt(window.getComputedStyle(labelSizes[0], null).getPropertyValue('width'), 10)
+	const labelH = parseInt(window.getComputedStyle(labelSizes[0], null).getPropertyValue('height'), 10)
+
+	labels.classList.add('labels--animating')
+	labelInputChecked.checked = false
 
 	const animationAll = async () => {
 		if (!webgl[dataModalID]) {
@@ -486,11 +492,8 @@ const openModal = event => {
 				height: `0px`
 			}, 'height')
 		})
-		let delayLabels = 0
-		let transtionTimeLabels = 800
-		const labelW = parseInt(window.getComputedStyle(modalState.labelSizes[0], null).getPropertyValue('width'), 10)
-		const labelH = parseInt(window.getComputedStyle(modalState.labelSizes[0], null).getPropertyValue('height'), 10)
-		const labelSizesPromises = modalState.labelSizes.map(label => {
+
+		const labelSizesPromises = labelSizes.map(label => {
 			delayLabels += (labelW/(labelW*2 + labelH*2))*transtionTimeLabels
 			return animate(label.querySelector('.shape-rect'), {
 				transition: `stroke-dashoffset ${transtionTimeLabels}ms linear ${delayLabels}ms`,
@@ -500,9 +503,10 @@ const openModal = event => {
 
 		modal.classList.add('modal--active')
 		await Promise.all([...descriptionSpanPromises, ...labelSizesPromises])
-		modalState.shapesRect.forEach(el => el.removeAttribute('style'))
-		modalState.labelInputChecked.checked = true
-		modalState.label.classList.remove('labels--animating')
+
+		shapesRect.forEach(el => el.removeAttribute('style'))
+		labelInputChecked.checked = true
+		labels.classList.remove('labels--animating')
 
 		cloneProductImg.remove()
 		cloneProductTitle.remove()
@@ -530,6 +534,7 @@ const closeModal = () => {
 	const cloneProductPrice = modalState.price.cloneNode(true)
 
 	const descriptionSpans = [...modalState.description.querySelectorAll('.text-animation span')]
+	const labelChecked = modalState.modal.querySelector('.labels input:checked')
 
 	const animationAll = async () => {
 		await asyncImageLoader(src)
@@ -539,7 +544,7 @@ const closeModal = () => {
 				height: modalState.descriptionSpanHeight,
 			}, 'height')
 		})
-		const labelChecked = modalState.modal.querySelector('.labels input:checked')
+
 		labelChecked.checked = false
 		await Promise.all(descriptionSpanPromises)
 
