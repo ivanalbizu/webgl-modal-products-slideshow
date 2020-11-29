@@ -359,10 +359,31 @@ h1, h2, h3, h4, h5, h6, p {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .product__submit:focus {
   outline: none;
+}
+
+.product__submit::before {
+  content: "";
+  background-color: #000;
+  height: 100%;
+  width: 0;
+  position: absolute;
+  clip-path: polygon(70% 0, 70% 0, 30% 100%, 30% 100%);
+  transition: width 1s, clip-path 1s;
+}
+
+.modal--active .product__submit {
+  background-color: #fff;
+}
+
+.modal--active .product__submit::before {
+  width: 100%;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  transition: width .8s ease-in-out .3s, clip-path .8s .3s ease-in-out;
 }
 
 .products {
@@ -383,6 +404,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .marquee .mar-default {
+  z-index: 1;
   opacity: 1;
   transition: opacity linear .4s;
 }
