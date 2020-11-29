@@ -214,28 +214,11 @@ class WebglSlides {
 	}
 
 	error() {
-		document.body.classList.add("no-curtains", "image-1")
-
-		this.slidesState.navs.forEach(nav => {
-			nav.addEventListener("click", event => {
-				const to = event.target.getAttribute('data-goto')
-				this._navigationDirection(to)
-
-				document.body.classList.remove("image-1", "image-2", "image-3", "image-4")
-				document.body.classList.add("image-" + this.slidesState.nextTextureIndex)
-
-				this.slidesState.activeTextureIndex = this.slidesState.nextTextureIndex
-
-			})
-		})
+		document.body.classList.add("no-curtains")
 	}
 
 	restoreContext() {
 		this.curtains.restoreContext()
-	}
-
-	removePlanes() {
-		this.curtains.dispose()
 	}
 }
 
@@ -245,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const modals = document.querySelectorAll('body:not(.is-animating) [data-modal]')
 	modals.forEach(modal => modal.addEventListener('click', openModal, false))
 
-	const closes = document.querySelectorAll('body:not(.is-animating) .modal-close')
+	const closes = document.querySelectorAll('body:not(.is-animating) .modal__close')
 	closes.forEach(close => close.addEventListener('click', closeModal, false))
 
 	if (!isMobileDevice()) {
